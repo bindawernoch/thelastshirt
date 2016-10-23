@@ -1,4 +1,4 @@
-
+from lib.process import Process
 
 
 class Project:
@@ -11,7 +11,7 @@ class Project:
         self._get_date()
 
     def _get_date(self):
-        print self.process.execute("date")
+        print(self.process.execute("date"))
 
     def print_example_arg(self):
-        print self.options.example
+        print(self.options.example)
