@@ -63,7 +63,7 @@
             "type": "python",
             "request": "launch",
             "stopOnEntry": false,
-            "pythonPath": "${config.python.pythonPath}",
+            "pythonPath": "${workspaceRoot}/.virtualenvs/cv/bin/python3",
             "program": "/home/mario/Dropbox/Tshirts/tshirt_proj/tshirt/main.py",
             "env": {
                 "FLASK_APP": "${workspaceRoot}/quickstart/app.py"
