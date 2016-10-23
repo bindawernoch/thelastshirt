@@ -64,7 +64,7 @@
             "request": "launch",
             "stopOnEntry": false,
             "pythonPath": "${config.python.pythonPath}",
-            "program": "fully qualified path fo 'flask' executable. Generally located along with python interpreter",
+            "program": "/home/mario/Dropbox/Tshirts/tshirt_proj/tshirt/main.py",
             "env": {
                 "FLASK_APP": "${workspaceRoot}/quickstart/app.py"
             },
