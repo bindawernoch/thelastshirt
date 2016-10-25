@@ -1,7 +1,6 @@
 import sys
 
-from lib import Project
-from lib import Options
+from lib import Options, Project
 
 if __name__ == '__main__':
     options = Options()
@@ -11,3 +10,4 @@ if __name__ == '__main__':
 
     v.date()
     v.print_example_arg()
+    print(arsch)
