@@ -10,4 +10,3 @@ if __name__ == '__main__':
 
     v.date()
     v.print_example_arg()
-    print(arsch)
