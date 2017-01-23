@@ -1,12 +1,9 @@
 import sys
 import os
-from lib import Options, Project
+import lib
 
 if __name__ == '__main__':
-    options = Options()
-    opts = options.parse(sys.argv[1:])
+    OPTIONS = lib.Options()
+    OPTS = OPTIONS.parse(sys.argv[1:])
 
-    v = Project(opts)
-
-    v.date()
-    v.print_example_arg()
+    print(sys.path)
