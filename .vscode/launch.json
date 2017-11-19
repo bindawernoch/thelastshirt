@@ -1,12 +1,13 @@
 {
     "version": "0.2.0",
     "configurations": [
+        
         {
             "name": "Python",
             "type": "python",
             "request": "launch",
             "stopOnEntry": true,
-            "pythonPath": "${config.python.pythonPath}",
+            "pythonPath": "${config:python.pythonPath}",
             "program": "${file}",
             "debugOptions": [
                 "WaitOnAbnormalExit",
@@ -19,7 +20,7 @@
             "type": "python",
             "request": "launch",
             "stopOnEntry": true,
-            "pythonPath": "${config.python.pythonPath}",
+            "pythonPath": "${config:python.pythonPath}",
             "program": "${file}",
             "console": "integratedTerminal",
             "debugOptions": [
@@ -32,7 +33,7 @@
             "type": "python",
             "request": "launch",
             "stopOnEntry": true,
-            "pythonPath": "${config.python.pythonPath}",
+            "pythonPath": "${config:python.pythonPath}",
             "program": "${file}",
             "console": "externalTerminal",
             "debugOptions": [
@@ -45,7 +46,7 @@
             "type": "python",
             "request": "launch",
             "stopOnEntry": true,
-            "pythonPath": "${config.python.pythonPath}",
+            "pythonPath": "${config:python.pythonPath}",
             "program": "${workspaceRoot}/manage.py",
             "args": [
                 "runserver",
@@ -63,7 +64,7 @@
             "type": "python",
             "request": "launch",
             "stopOnEntry": false,
-            "pythonPath": "${config.python.pythonPath}",
+            "pythonPath": "${config:python.pythonPath}",
             "program": "${workspaceRoot}/run.py",
             "args": [],
             "debugOptions": [
@@ -77,7 +78,7 @@
             "type": "python",
             "request": "launch",
             "stopOnEntry": true,
-            "pythonPath": "${config.python.pythonPath}",
+            "pythonPath": "${config:python.pythonPath}",
             "program": "${workspaceRoot}/console.py",
             "args": [
                 "dev",

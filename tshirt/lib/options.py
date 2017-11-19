@@ -2,6 +2,9 @@ from argparse import ArgumentParser
 
 
 class Options:
+    """
+    Docstring
+    """
 
     def __init__(self):
         self._init_parser()
