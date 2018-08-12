@@ -8,6 +8,8 @@ import numpy as np
 from PIL import Image
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_pdf import PdfPages
+#
+import tshirt.components.opencv as myopencv
 
 # from IPython import embed
 # embed() # drop into an IPython session.
@@ -53,90 +55,6 @@ def run_thresholds(img_f):
         mypp.savefig(myfig)
         plt.close(myfig)
     mypp.close()
-
-
-
-def run_watershed(img_f, backg, obj, plot_images=False):
-    # https://stackoverflow.com/questions/42294109/remove-background-of-the-image-using-opencv-python
-
-    # Figure setup
-    if plot_images:
-        f, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2, 2, sharex='col', sharey='row')
-
-    # Load the image
-    img = cv2.imread(img_f, 3)
-    assert img is not None, "Couldnt open {}".format(img_f)
-
-    if plot_images:
-        ax1.imshow(img)
-
-    # Remember image axis lengths
-    ilen = img.shape[0]
-    jlen = img.shape[1]
-
-    # Create a blank image of zeros (same dimension as img)
-    # It should be grayscale (1 color channel)
-    marker = np.zeros_like(img[:,:,0]).astype(np.int32)
-
-    # This step is manual. The goal is to find the points
-    # which create the result we want. I suggest using a
-    # tool to get the pixel coordinates.
-
-    # Dictate the background and set the markers to 1
-    for i, j in zip(*backg):
-        marker[int(i*ilen)][int(j*jlen)] = 1
-
-        # print(i*ilen, j*jlen)
-    # marker[1500][250] = 1
-    # marker[1500][-250] = 1
-
-
-    # Dictate the area of interest
-    # One might use different values for each part of the T-shirt
-    for i, j in zip(*obj):
-        marker[int(i*ilen)][int(j*jlen)] = 255
-        marker[int(i*ilen)][int(j*jlen)] = 255
-
-        # print(i*ilen, j*jlen)
-    # marker[1500][2500] = 255    # ...
-    # marker[135][294] = 64     # ...
-
-    # Now we have set the markers, we use the watershed
-    # algorithm to generate a marked image
-    marked = cv2.watershed(img, marker)
-
-    # Plot this one. If it does what we want, proceed;
-    # otherwise edit your markers and repeat
-    if plot_images:
-        ax2.imshow(marked, cmap='gray')
-
-    # Make the background black, and what we want to keep white
-    marked[marked <255] = 0
-    # marked[marked > 1] = 255
-
-    # Use a kernel to dilate the image, to not lose any detail on the outline
-    # I used a kernel of 3x3 pixels
-    kernel = np.ones((3,3),np.uint8)
-    dilation = cv2.dilate(marked.astype(np.float32), kernel, iterations = 1)
-
-    # Plot again to check whether the dilation is according to our needs
-    # If not, repeat by using a smaller/bigger kernel, or more/less iterations
-    if plot_images:
-        ax3.imshow(dilation, cmap='gray')
-
-    # Now apply the mask we created on the initial image
-    final_img = cv2.bitwise_and(img, img, mask=dilation.astype(np.uint8))
-
-    # cv2.imread reads the image as BGR, but matplotlib uses RGB
-    # BGR to RGB so we can plot the image with accurate colors
-    b, g, r = cv2.split(final_img)
-    final_img = cv2.merge([r, g, b])
-
-    # Plot the final result
-    if plot_images:
-        ax4.imshow(final_img)
-
-    return dilation.astype(np.uint8), final_img
 
 def iris_flowers():
     # https://machinelearningmastery.com/machine-learning-in-python-step-by-step/
@@ -227,7 +145,6 @@ def sobel(img_f):
 
     plt.subplot(111),plt.imshow(img)
 
-
     laplacian = cv2.Laplacian(img,cv2.CV_64F)
     sobelx = cv2.Sobel(img,cv2.CV_64F,1,0,ksize=5)
     sobely = cv2.Sobel(img,cv2.CV_64F,0,1,ksize=5)
@@ -260,7 +177,6 @@ def sobel(img_f):
 
     # https://de.wikipedia.org/wiki/Hough-Transformation
 
-
 def test_gauss():
     mean = [0.6, 0.5]
     cov = [[0.01, 0], [0, 0.01]]  # diagonal covariance
@@ -271,96 +187,34 @@ def test_gauss():
     print(y)
     plt.axis('equal')
 
-def get_contour_lines(img):
-
-    sobelx = cv2.Sobel(img,cv2.CV_64F,1,0,ksize=5)
-    sobely = cv2.Sobel(img,cv2.CV_64F,0,1,ksize=5)
-
-    return sobelx+sobely
-
 if __name__ == '__main__':
-    # first attempt
+    # # first attempt
     # tst = "/home/mario/Dropbox/Tshirts/tshirt_proj/data/P1000711.JPG"
     # run_thresholds(tst)
-    # run_watershed(tst, backg, obj)
 
     # second attempt
-    # tst = "/home/mario/Dropbox/Tshirts/tshirt_proj/data/"
+    tst = "/home/mario/Dropbox/Tshirts/tshirt_proj/data/"
     # [[fraction of y axis], [fraction of x axis]]
-    # backg, obj = [[0.5, 0.5], [0.05, 0.95]], [[0.4, 0.5, 0.6], [0.4, 0.5, 0.6]]
-    #
-    # for fn in os.listdir(tst):
-    #     fnap = os.path.join(tst, fn)
-    #     if os.path.isfile(fnap):
-    #         run_watershed(fnap, backg, obj)
+    backg, obj = [[0.5, 0.5], [0.05, 0.95]], [[0.4, 0.5, 0.6], [0.4, 0.5, 0.6]]
+    for i, fn in enumerate(os.listdir(tst)):
+        fnap = os.path.join(tst, fn)
+        if os.path.isfile(fnap):
+            fnap_img = cv2.imread(fnap, 3)
+            myopencv.watershed_it(fnap_img, backg, obj, plot_images=True)
+        if i == 4:
+            break
+    plt.show()
 
-    # third attempt
+    # # third attempt
     # iris_flowers()
-    # https://machinelearningmastery.com/a-tour-of-machine-learning-algorithms/
+    # # https://machinelearningmastery.com/a-tour-of-machine-learning-algorithms/
 
-    # fourth
+    # # fourth
     # from IPython.core import debugger
     # debug = debugger.Pdb().set_trace
     # debug()
     # tst = "/home/mario/Dropbox/Tshirts/tshirt_proj/data/P1000711.JPG"
     # sobel(tst)
 
-    ## fifth
-    tst = "/home/mario/Dropbox/Tshirts/tshirt_proj/data/P1000711.JPG"
-    mean = [0.6, 0.5]
-    cov = [[0.01, 0], [0, 0.01]]  # diagonal covariance
-    x, y = np.random.multivariate_normal(mean, cov, 5).T
-    #
-    backg, obj = [[0.5, 0.5], [0.05, 0.95]], [y, x]
-    msk, res = run_watershed(tst, backg, obj)
-    #
-    cntrs = get_contour_lines(msk)
-    #
-    msk_im = np.zeros(list(msk.shape)+[3])
-    msk_im[:,:,1] = msk
-    msk_im = np.array(msk_im, dtype = np.uint8)
-    msk_im_grey = cv2.cvtColor(msk_im, cv2.COLOR_BGR2GRAY)
-    edges = cv2.Canny(msk_im_grey, 0, 1000, apertureSize = 5)
-
-    # minLineLength = 100
-    # maxLineGap = 10
-    # lines = cv2.HoughLinesP(edges,1, np.pi/180, 100, minLineLength, maxLineGap)
-    # for x1,y1,x2,y2 in lines[0]:
-    #     print(x1,y1,x2,y2)
-    #     cv2.line(msk_im,(x1,y1),(x2,y2),(255,0,0),20)
-
-    lines = cv2.HoughLines(edges, 1, np.pi/180, 130)
-    for line in lines:
-        for rho, theta in line:
-            c = np.cos(theta)
-            s = np.sin(theta)
-            x0 = c*rho
-            y0 = s*rho
-            print()
-            print(x0, y0)
-            print(90 - np.rad2deg(theta))
-
-            x1 = int(x0 + 5000*(-s))
-            y1 = int(y0 + 5000*(c))
-            x2 = int(x0 - 5000*(-s))
-            y2 = int(y0 - 5000*(c))
-
-            cv2.line(msk_im,(x1,y1),(x2,y2),(255,0,0),20)
-
-
-    fig1, (ax11, ax12, ax13) = plt.subplots(1, 3, sharey='col', figsize=(20,6))
-    xlen = msk.shape[1]
-    ylen = msk.shape[0]
-    backg_x = [x*xlen for x in backg[1]]
-    backg_y = [x*ylen for x in backg[0]]
-    obj_x = [x*xlen for x in obj[1]]
-    obj_y = [x*ylen for x in obj[0]]
-
-    ax11.plot(backg_x, backg_y, 'o')
-    ax11.plot(obj_x, obj_y, 'd')
-    ax11.imshow(msk, origin='low')
-    ax12.imshow(cntrs, origin='low')
-    ax13.imshow(msk_im, origin='low')
-
-
-    plt.show()
+    # fifth
+    # implemented in main now
