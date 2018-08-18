@@ -34,8 +34,7 @@ def plot_edge_detection(img, msk, backg, obj, msk_img, edges, lines):
     ax12.plot(obj_x, obj_y, 'd')
     ax21.imshow(edges, cmap='gray', origin='low')
     ax22.imshow(msk_img, origin='low')
-    plt.tight_layout()
-    return fig1
+    return fig1, (ax11, ax12, ax21, ax22)
 
 def monte_watershed_it(img_f):
     # Open image

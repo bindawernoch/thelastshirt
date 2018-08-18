@@ -20,3 +20,7 @@ This project is an example for a python command-line application structure with 
 
         cd project
         nosetests
+
+## ToDo
+remove .virtualenvs.old
+remove requirements.txt

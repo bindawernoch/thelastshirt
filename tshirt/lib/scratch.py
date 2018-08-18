@@ -20,6 +20,11 @@ import tshirt.components.opencv as myopencv
 # Pdb().set_trace()
 
 
+    # from altair import *
+    #Chart(detres_df.reset_index()).mark_point(size=1).encode(x='rho',y='theta', color='name').configure_cell(width=140, height=70)
+
+
+
 def run_thresholds(img_f):
     """ development stuff """
 
