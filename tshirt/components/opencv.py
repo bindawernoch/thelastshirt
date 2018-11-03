@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-def plot_edge_detection(img, msk, backg, obj, msk_img, edges, lines):
+def plot_edge_detection(img, msk, backg, obj, edges, lines):
     if lines.any():
         for line in lines:
             for rho, theta in line:
@@ -15,7 +15,7 @@ def plot_edge_detection(img, msk, backg, obj, msk_img, edges, lines):
                 y1 = int(y0 + 5000*(c))
                 x2 = int(x0 - 5000*(-s))
                 y2 = int(y0 - 5000*(c))
-                cv2.line(msk_img,(x1,y1),(x2,y2),(255,0,0),20)
+                cv2.line(msk, (x1,y1), (x2,y2), (200,20,10), 20)
 
     fig1, ((ax11, ax12), (ax21, ax22)) = plt.subplots(2, 2, figsize=(14, 10.1), 
                                                       sharey='col', sharex='col')
@@ -26,14 +26,14 @@ def plot_edge_detection(img, msk, backg, obj, msk_img, edges, lines):
     obj_x = [x*xlen for x in obj[1]]
     obj_y = [x*ylen for x in obj[0]]
 
-    ax11.imshow(img, origin='low')
+    ax11.imshow(img)
     ax11.plot(backg_x, backg_y, 'o')
     ax11.plot(obj_x, obj_y, 'd')
-    ax12.imshow(msk, origin='low')
+    ax12.imshow(msk)
     ax12.plot(backg_x, backg_y, 'o')
     ax12.plot(obj_x, obj_y, 'd')
-    ax21.imshow(edges, cmap='gray', origin='low')
-    ax22.imshow(msk_img, origin='low')
+    ax21.imshow(edges, cmap='gray')
+    ax22.imshow(msk)
     return fig1, (ax11, ax12, ax21, ax22)
 
 def monte_watershed_it(img_f):
@@ -63,10 +63,8 @@ def canny_it(mtrx):
     return edges, mtrx_img_grey
 
 def sobel_it(img):
-
     sobelx = cv2.Sobel(img,cv2.CV_64F,1,0,ksize=5)
     sobely = cv2.Sobel(img,cv2.CV_64F,0,1,ksize=5)
-
     return sobelx+sobely
 
 def watershed_it(img, backg, obj, plot_images=False):
@@ -136,4 +134,5 @@ def watershed_it(img, backg, obj, plot_images=False):
     if plot_images:
         ax4.imshow(final_img)
 
-    return dilation.astype(np.uint8), final_img, backg, obj
+    return backg, obj, dilation.astype(np.uint8), final_img
+    

@@ -9,55 +9,139 @@ import altair as alt
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_pdf import PdfPages
 # tshirt
-import tshirt.lib as lib
-import tshirt.components.opencv as myopencv
-
-RUNTIMEDIR = os.getcwd()
+import lib
+import components
 
 
 def operation_t(opts):
-    my_index = pd.MultiIndex(levels=[[]]*3, labels=[[]]*3,
-                             names=[u'name', u'name_id', u'line'])
-    detres_df = pd.DataFrame(index=my_index, columns=['x0','y0','theta'])
-
-    mytsf = "/home/mario/Dropbox/Tshirts/tshirt_proj/data/"
+    mytsf = "/home/mario/Dropbox/Tshirts/tshirt_data/"
     mypp = PdfPages(os.path.join(RUNTIMEDIR, "operation_t.pdf"))
+    mysze = (3000, 4000)
+    mshirt = components.worker.Shirt(mytsf, mysze, mypp) 
     #
     for i, fn in enumerate(os.listdir(mytsf)):
-        fnap = os.path.join(mytsf, fn)
-        if os.path.isfile(fnap):
-            single_t(fnap, i, detres_df , plotit=mypp)
-        # if i == 5:
+        if os.path.isfile(os.path.join(mytsf, fn)):
+            mshirt.render(i, fn)
+        # if i == 10:
         #     break
     mypp.close()
-
-    df = detres_df.reset_index()[['name', 'rho', 'theta']]
-    df.rho = np.abs(df.rho)
-    df.theta = np.abs(df.theta)
-    alt.Chart(df).mark_point().encode(x='rho', y='theta', color='name').save('chart.html')
+    df = mshirt.get_res()
+    # !!!!! CONSIDER SIGN INFORMATION / dont drop it / add it to graph for both rho and theta
+    # df.rho = np.sqrt( (df.x0 + df.deltax)**2 + (df.y0 + df.deltay)**2 )
+    # df.theta = np.abs(df.theta)
+    # regions
+    rgns = [{
+            "xstart": 1200,
+            "xend": 1500,
+            "ystart": 10,
+            "yend": 14,
+            "event": "Waist Left Side"
+            },
+            {
+            "xstart": 800,
+            "xend": 1200,
+            "ystart": -1,
+            "yend": 12,
+            "event": "Waist Left Side"
+            },
+            {
+            "xstart": 250,
+            "xend": 800,
+            "ystart": -7,
+            "yend": 8,
+            "event": "Waist Left Side"
+            },
+            {
+            "xstart": 0,
+            "xend": 250,
+            "ystart": -14,
+            "yend": -1,
+            "event": "Sleeve Left End"
+            },
+            {
+            "xstart": 250,
+            "xend": 500,
+            "ystart": -26,
+            "yend": -7,
+            "event": "Sleeve Left End"
+            },
+            {
+            "xstart": 500,
+            "xend": 750,
+            "ystart": -32,
+            "yend": -7,
+            "event": "Sleeve Left End"
+            },
+            {
+            "xstart": 750,
+            "xend": 850,
+            "ystart": -38,
+            "yend": -25,
+            "event": "Sleeve Left End"
+            },
+            {
+            "xstart": 2600,
+            "xend": 2800,
+            "ystart": 0,
+            "yend": 8,
+            "event": "Waist Right Side"
+            },
+            {
+            "xstart": 2300,
+            "xend": 2600,
+            "ystart": -10,
+            "yend": 6,
+            "event": "Waist Right Side"
+            },
+            {
+            "xstart": 2050,
+            "xend": 2300,
+            "ystart": -12,
+            "yend": 2,
+            "event": "Waist Right Side"
+            },
+            {
+            "xstart": 1800,
+            "xend": 2050,
+            "ystart": -13,
+            "yend": -1,
+            "event": "Waist Right Side"
+            },
+            {
+            "xstart": 1600,
+            "xend": 1800,
+            "ystart": -16,
+            "yend": -3,
+            "event": "Waist Right Side"
+            },
+            {
+            "xstart": 2850,
+            "xend": 3300,
+            "ystart": -1,
+            "yend": 30,
+            "event": "Sleeve Right End"
+            }]
+    rgns = alt.pd.DataFrame(rgns)
+    rect_rgns = alt.Chart(rgns).mark_rect().encode(x='xstart:Q', x2='xend:Q',
+                                                   y='ystart:Q', y2='yend:Q',
+                                                   color='event:N')
     #
-    charts = [alt.Chart(subdf).mark_point().properties(title=name).encode(x='rho', y='theta')
+    pnt_single = alt.Chart(df).mark_point()
+    # single
+    pnt_single.encode(x='rho:Q', y='theta:Q', color='name:N').save('chart.html')
+    # multiple
+    domx = [0, max(mysze)]
+    domy = [-95, 95]
+    charts = [rect_rgns + 
+              alt.Chart(subdf).mark_point(color='#333')
+                             .properties(title=name)
+                             .encode(alt.X('rho:Q', scale=alt.Scale(domain=domx)),
+                                     alt.Y('theta:Q', scale=alt.Scale(domain=domy)))
               for name, subdf in df.groupby('name', sort=False)]
+    #
     alt.vconcat(*charts).save('charts.html')
 
-def single_t(img_n, n_id, detres_df, plotit=False):
-    msk, final_img, backg, obj = myopencv.monte_watershed_it(img_n)
-    edges, msk_img = myopencv.canny_it(msk)
-    lines = myopencv.hough_it(edges)
-    #
-    if not lines is None:
-        image_just_name = os.path.basename(img_n)
-        lib.helper.lines2df(image_just_name, n_id, lines, detres_df)
-        #
-        if plotit:
-            fig, ax = myopencv.plot_edge_detection(final_img, msk, backg, obj, 
-                                                   msk_img, edges, lines)
-            fig.suptitle(image_just_name, fontsize=20)
-            #plt.tight_layout()
-            if type(plotit) is PdfPages:
-                plotit.savefig(fig)
-                plt.close(fig)
-
 if __name__ == '__main__':
+    RUNTIMEDIR = os.getcwd()
     OPTIONS = lib.Options()
     operation_t(OPTIONS.parse(sys.argv[1:]))
