@@ -45,8 +45,15 @@ def operation_t(opts):
             "event": "Waist Left Side"
             },
             {
-            "xstart": 250,
+            "xstart": 400,
             "xend": 800,
+            "ystart": -7,
+            "yend": 9,
+            "event": "Waist Left Side"
+            },
+                        {
+            "xstart": 250,
+            "xend": 400,
             "ystart": -7,
             "yend": 8,
             "event": "Waist Left Side"
@@ -55,7 +62,7 @@ def operation_t(opts):
             "xstart": 0,
             "xend": 250,
             "ystart": -14,
-            "yend": -1,
+            "yend": 2,
             "event": "Sleeve Left End"
             },
             {
@@ -73,15 +80,15 @@ def operation_t(opts):
             "event": "Sleeve Left End"
             },
             {
-            "xstart": 750,
+            "xstart": 600,
             "xend": 850,
-            "ystart": -38,
+            "ystart": -39,
             "yend": -25,
             "event": "Sleeve Left End"
             },
             {
             "xstart": 2600,
-            "xend": 2800,
+            "xend": 2900,
             "ystart": 0,
             "yend": 8,
             "event": "Waist Right Side"
@@ -97,18 +104,18 @@ def operation_t(opts):
             "xstart": 2050,
             "xend": 2300,
             "ystart": -12,
-            "yend": 2,
+            "yend": 3,
             "event": "Waist Right Side"
             },
             {
             "xstart": 1800,
             "xend": 2050,
             "ystart": -13,
-            "yend": -1,
+            "yend": 0,
             "event": "Waist Right Side"
             },
             {
-            "xstart": 1600,
+            "xstart": 1500,
             "xend": 1800,
             "ystart": -16,
             "yend": -3,
@@ -118,7 +125,7 @@ def operation_t(opts):
             "xstart": 2850,
             "xend": 3300,
             "ystart": -1,
-            "yend": 30,
+            "yend": 31,
             "event": "Sleeve Right End"
             }]
     rgns = alt.pd.DataFrame(rgns)

@@ -13,7 +13,7 @@
 * monte_watershed_it has object and background indication point generation
   hard coded. Needs to be parameterized
 * calculate the percentage of data points in each bucket of the rho/theta diagram
-
+* use the distance to the nearest next data point to classify 
 
 - remove hard coded min max axis values.
   where: helper/8 main/123
