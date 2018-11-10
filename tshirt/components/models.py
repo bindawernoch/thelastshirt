@@ -1,11 +1,10 @@
-from peewee import *
+from peewee import Model, SqliteDatabase, CharField, IntegerField
 import datetime
 import os
 
 
 PS = os.path.dirname(os.path.abspath(__file__))
-
-db = SqliteDatabase(os.path.join(PS, '../../data/my_database.db'))
+MYDB = SqliteDatabase(os.path.join(PS, '../../data/my_database.db'))
 
 class Classifications(Model):
     name = CharField()
@@ -15,7 +14,12 @@ class Classifications(Model):
     yend = IntegerField()
 
     class Meta:
-        database = db # This model uses the "people.db" database.
+        database = MYDB
 
-db.connect()
-db.create_tables([Classifications])
+def create_my_tables():
+    MYDB.connect()
+    MYDB.create_tables([Classifications])
+
+def get_classifications():
+    query = Classifications.select()
+    return list(query.dicts())

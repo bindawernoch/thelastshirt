@@ -22,116 +22,15 @@ def operation_t(opts):
     for i, fn in enumerate(os.listdir(mytsf)):
         if os.path.isfile(os.path.join(mytsf, fn)):
             mshirt.render(i, fn)
-        # if i == 10:
+        # if i == 3:
         #     break
     mypp.close()
     df = mshirt.get_res()
-    # !!!!! CONSIDER SIGN INFORMATION / dont drop it / add it to graph for both rho and theta
-    # df.rho = np.sqrt( (df.x0 + df.deltax)**2 + (df.y0 + df.deltay)**2 )
-    # df.theta = np.abs(df.theta)
     # regions
-    rgns = [{
-            "xstart": 1200,
-            "xend": 1500,
-            "ystart": 10,
-            "yend": 14,
-            "event": "Waist Left Side"
-            },
-            {
-            "xstart": 800,
-            "xend": 1200,
-            "ystart": -1,
-            "yend": 12,
-            "event": "Waist Left Side"
-            },
-            {
-            "xstart": 400,
-            "xend": 800,
-            "ystart": -7,
-            "yend": 9,
-            "event": "Waist Left Side"
-            },
-                        {
-            "xstart": 250,
-            "xend": 400,
-            "ystart": -7,
-            "yend": 8,
-            "event": "Waist Left Side"
-            },
-            {
-            "xstart": 0,
-            "xend": 250,
-            "ystart": -14,
-            "yend": 2,
-            "event": "Sleeve Left End"
-            },
-            {
-            "xstart": 250,
-            "xend": 500,
-            "ystart": -26,
-            "yend": -7,
-            "event": "Sleeve Left End"
-            },
-            {
-            "xstart": 500,
-            "xend": 750,
-            "ystart": -32,
-            "yend": -7,
-            "event": "Sleeve Left End"
-            },
-            {
-            "xstart": 600,
-            "xend": 850,
-            "ystart": -39,
-            "yend": -25,
-            "event": "Sleeve Left End"
-            },
-            {
-            "xstart": 2600,
-            "xend": 2900,
-            "ystart": 0,
-            "yend": 8,
-            "event": "Waist Right Side"
-            },
-            {
-            "xstart": 2300,
-            "xend": 2600,
-            "ystart": -10,
-            "yend": 6,
-            "event": "Waist Right Side"
-            },
-            {
-            "xstart": 2050,
-            "xend": 2300,
-            "ystart": -12,
-            "yend": 3,
-            "event": "Waist Right Side"
-            },
-            {
-            "xstart": 1800,
-            "xend": 2050,
-            "ystart": -13,
-            "yend": 0,
-            "event": "Waist Right Side"
-            },
-            {
-            "xstart": 1500,
-            "xend": 1800,
-            "ystart": -16,
-            "yend": -3,
-            "event": "Waist Right Side"
-            },
-            {
-            "xstart": 2850,
-            "xend": 3300,
-            "ystart": -1,
-            "yend": 31,
-            "event": "Sleeve Right End"
-            }]
-    rgns = alt.pd.DataFrame(rgns)
+    rgns = alt.pd.DataFrame(components.models.get_classifications())
     rect_rgns = alt.Chart(rgns).mark_rect().encode(x='xstart:Q', x2='xend:Q',
                                                    y='ystart:Q', y2='yend:Q',
-                                                   color='event:N')
+                                                   color='name:N')
     #
     pnt_single = alt.Chart(df).mark_point()
     # single
