@@ -1,5 +1,5 @@
 # package
-from lib.options import Options
-from lib.process import Process
-from lib.process import ProcessException
-import lib.helper as helper
+from .options import Options
+from .process import Process
+from .process import ProcessException
+from . import helper

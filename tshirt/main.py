@@ -44,8 +44,10 @@ def operation_t(opts):
                              .encode(alt.X('rho:Q', scale=alt.Scale(domain=domx)),
                                      alt.Y('theta:Q', scale=alt.Scale(domain=domy)))
               for name, subdf in df.groupby('name', sort=False)]
-    #
     alt.vconcat(*charts).save('charts.html')
+    #
+    df.to_csv('temp.csv')
+
 
 if __name__ == '__main__':
     RUNTIMEDIR = os.getcwd()

@@ -1,4 +1,10 @@
 // Platzieren Sie Ihre Einstellungen in dieser Datei, um Standard- und Benutzereinstellungen zu überschreiben.
 {
-    "python.pythonPath": "/home/mario/.virtualenvs/cv/bin/python"
+    "python.pythonPath": "/home/mario/.virtualenvs/cv/bin/python",
+    "cSpell.diagnosticLevel": "Hint",
+    "code-runner.cwd": "/home/mario/Dropbox/Tshirts/tshirt_rntm",
+    "code-runner.customCommand": "",
+    "code-runner.defaultLanguage": "python",
+    "code-runner.ignoreSelection": true,
+    "code-runner.saveAllFilesBeforeRun": true
 }

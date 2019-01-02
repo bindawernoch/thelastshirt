@@ -1,23 +1,14 @@
-* categorize using machine learning
-* manually determined categories shall be put 
-  in an input file, e.g. csv file.
-* worker shall be some kind of API for tshirt image 
-  processing.
-* opencv might suit better in lib. --functional programming
+* worker shall also contain some kind of API for the post Shirt processing.
 * move lines2df to opencv library?
 * put plot of mask along with rho, theta graphs
-* move opencv to lib
 * remove development stuff like myopencv and scratch -- maybe later
 * give the manually defined regions in percent (for development its easier 
-  in pixel right now)
+  in pixel right now) -- actually better to give in pixel of the standard image
+  size. Then scale the region definition and everything else.. -- already done 
 * monte_watershed_it has object and background indication point generation
   hard coded. Needs to be parameterized
 * calculate the percentage of data points in each bucket of the rho/theta diagram
-* use the distance to the nearest next data point to classify 
+* calculate percentage of  rho/theta data-points in each region
+    show this data as bar plot under the first graph
 
-- remove hard coded min max axis values.
-  where: helper/8 main/123
-- scale rho, more precisely the respective axes, if image
-  size is not 3000x4000
 - finish manual categorization.
-- cleanup main.

@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 from matplotlib.backends.backend_pdf import PdfPages
 # tshirt
 import lib
-import components.opencv
+import lib.opencv
 
 
 @attr.s
@@ -30,7 +30,7 @@ class Shirt(object):
         self.column_names = ['x0','y0','theta', 'rho', 'deltax', 'deltay']
         idx = pd.MultiIndex(levels=[[]]*3, labels=[[]]*3, names=self.idx_names)
         self.res_df = pd.DataFrame(index=idx, columns=self.column_names)
-        self.mopencv = components.opencv
+        self.mopencv = lib.opencv
 
     def render(self, fid, fname):
         absfname = os.path.join(self.folder, fname)
