@@ -1,6 +1,7 @@
 import warnings
 warnings.filterwarnings("ignore", message="numpy.dtype size changed")
 warnings.filterwarnings("ignore", message="numpy.ufunc size changed")
+from matplotlib.backends.backend_pdf import PdfPages
 from sklearn.cluster import KMeans
 import matplotlib.pyplot as plt
 import altair as alt
@@ -14,9 +15,9 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')
 from components import models
 
 
-RUNTIMEDIR = os.getcwd()
-
 def main():
+    mypp = PdfPages(os.path.join(RUNTIMEDIR, "kneedle_operation_t.pdf"))
+
     #  Tshirt Data
     df = pd.read_csv(os.path.join(RUNTIMEDIR, "temp.csv"))
     theta_min = df.theta.min()
@@ -36,7 +37,8 @@ def main():
                                     y='ystart:Q', y2='yend:Q', color=regcolor)
 
     #  Kmeans ALL Tshirt Data
-    df.loc[:, 'id'] = kmeans_it(df.loc[:, ['rho_nrm', 'theta_nrm']].values)
+    all_dta, fig = kmeans_it(df.loc[:, ['rho_nrm', 'theta_nrm']].values)
+    df.loc[:, 'id'] = all_dta
     #  Altair it
     allcolor = alt.Color('id:N', scale=alt.Scale(scheme='set1'))
     plt_kmeans = alt.Chart(df).mark_point().encode(x='rho:Q', y='theta:Q',
@@ -47,19 +49,26 @@ def main():
     alt_graphs = []
     for name, subdf in df.groupby('name', sort=False):
         isubdf = subdf.copy()
-        isubdf.loc[:, 'sub_id'] = kmeans_it(isubdf.loc[:, ['rho_nrm', 'theta_nrm']].values)
+        kminp = isubdf.loc[:, ['rho_nrm', 'theta_nrm']].values
+        single_dta, single_fig = kmeans_it(kminp)
+        isubdf.loc[:, 'sub_id'] = single_dta
+        #
+        single_fig.suptitle(name)
+        mypp.savefig(single_fig)
+        plt.close(single_fig)
+        #
         ialt = alt.Chart(isubdf).mark_point().properties(title=name)
         scol = alt.Color('sub_id:N', scale=alt.Scale(scheme='set1'))
-        subplt_kmeans = ialt.encode(x='rho:Q',  y='theta:Q', 
-                                    color=scol)
+        subplt_kmeans = ialt.encode(x='rho:Q',  y='theta:Q', color=scol)
         alt_graphs.append((subplt_kmeans + plt_rect_rgns))
+    mypp.close()
     alt.vconcat(*alt_graphs).resolve_scale(color='independent').save('charts_kmeans.html')
 
 def kmeans_it(X):
     if X.shape[0] > 12:
         n_clusters = 12
     else:
-        return [1] * X.shape[0]
+        return [1] * X.shape[0], plt.figure()
     my_ests = [KMeans(n_clusters=i) for i in range(1, n_clusters)]
     my_sods = np.array([None]*len(my_ests))  # SumOfDeltaSquares
     for i, my_est in enumerate(my_ests):
@@ -73,8 +82,15 @@ def kmeans_it(X):
         my_sods[i] = sods
     kneedle = kneed.KneeLocator(range(my_sods.size), my_sods,
                                 curve='convex', direction='decreasing')
-    return np.array([x for x in list(my_ests[kneedle.knee + 1].labels_)]) + 1
+    kneedle_delta = 3
+    ret_fig = plt.figure(figsize=(8, 8))
+    plt.plot(range(1, my_sods.size + 1), my_sods, '-d')
+    plt.vlines(kneedle.knee + 1 + kneedle_delta, plt.ylim()[0], plt.ylim()[1])
+    ret_data = [x for x in list(my_ests[kneedle.knee + kneedle_delta].labels_)]
+    ret_data = np.array(ret_data) + 1
+    return ret_data, ret_fig
 
 
 if __name__ == '__main__':
+    RUNTIMEDIR = os.getcwd()
     main()
