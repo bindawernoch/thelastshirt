@@ -31,6 +31,7 @@ def main():
 
     #  Regions
     rgns = alt.pd.DataFrame(models.get_classifications())
+    print(rgns)
     alt_rgns = alt.Chart(rgns).mark_rect(opacity=0.2)
     regcolor = alt.Color('name:N', legend=None, scale=alt.Scale(scheme='set1'))
     plt_rect_rgns = alt_rgns.encode(x='xstart:Q', x2='xend:Q',

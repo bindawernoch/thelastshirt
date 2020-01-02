@@ -24,11 +24,13 @@ def main():
         # hf.visit(printname)
         for key in hf.keys():
             print()
-            print(f"Get group: {key}.")
+            # print(f"Get group: {key}.")
+            print("Get group: {key}.".format(key=key))
             grp = hf[key]
             #grp.visit(printname)
             for n, ds in grp.items():
-                print(f"{n}: {ds}")
+                #print(f"{n}: {ds}")
+                print("{n}: {ds}".format(n=n, ds=ds))
 
 
 if __name__ == '__main__':

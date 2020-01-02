@@ -2,5 +2,20 @@
     "python.pythonPath": "/usr/bin/python3",
     "python.linting.pylintEnabled": false,
     "python.linting.mypyEnabled": true,
-    "python.linting.enabled": true
+    "python.linting.enabled": true,
+    "cSpell.words": [
+        "domx",
+        "domy",
+        "ests",
+        "mshirt",
+        "mypp",
+        "mysze",
+        "mytsf",
+        "rgns",
+        "scol",
+        "xend",
+        "xstart",
+        "yend",
+        "ystart"
+    ]
 }
