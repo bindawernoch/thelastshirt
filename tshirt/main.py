@@ -24,8 +24,8 @@ def operation_t(opts):
     for i, fn in enumerate(os.listdir(mytsf)):
         if os.path.isfile(os.path.join(mytsf, fn)):
             mshirt.render(i, fn)
-        if i == 2:
-            break
+        # if i == 2:
+        #     break
     mypp.close()
     myh5.close()
     df = mshirt.get_res()

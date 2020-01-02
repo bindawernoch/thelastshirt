@@ -12,7 +12,7 @@ MY_HOME = pathlib.Path().home()
 if socket.gethostname() == 'penguin':
     DB_FILE = MY_HOME / "./data/my_database.db"
 else:
-    DB_FILE = FILE_PATH / "../../data/my_database.db"
+    DB_FILE = FILE_PATH / "../data/my_database.db"
 
 MYDB = SqliteDatabase(str(DB_FILE), 
                                                 pragmas={
