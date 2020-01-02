@@ -19,3 +19,6 @@ chart.html
 chart.svg
 operation_t.pdf
 charts.html
+tshirt/.mypy_cache/*
+tshirt/002emypy_cache - Modify/*
+data/my_database.db

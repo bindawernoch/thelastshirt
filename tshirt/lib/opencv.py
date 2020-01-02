@@ -44,6 +44,10 @@ def monte_watershed_it(img_f):
     mean = [0.6, 0.5]
     cov = [[0.01, 0], [0, 0.01]]  # diagonal covariance
     x, y = np.random.multivariate_normal(mean, cov, 5).T
+    if x.max() > 1:
+        x /= x.max()
+    if y.max() > 1:
+        y /= y.max()
     #
     backg, obj = [[0.5, 0.5], [0.05, 0.95]], [y, x]
     #

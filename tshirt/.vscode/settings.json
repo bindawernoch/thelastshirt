@@ -1,4 +1,6 @@
 {
-    "code-runner.defaultLanguage": "python",
-    "code-runner.cwd": "/home/mario/Dropbox/Tshirts/tshirt_rntm"
+    "python.pythonPath": "/usr/bin/python3",
+    "python.linting.pylintEnabled": false,
+    "python.linting.mypyEnabled": true,
+    "python.linting.enabled": true
 }

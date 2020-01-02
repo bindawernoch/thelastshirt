@@ -9,7 +9,11 @@
             "type": "python",
             "request": "launch",
             "program": "${file}",
-            "console": "integratedTerminal"
+            "console": "integratedTerminal",
+            "cwd": "/mnt/chromeos/MyFiles/Tshirts/tshirt_rntm",
+            "env": {
+                "HDF5_USE_FILE_LOCKING": "FALSE"
+            },
         },
         {
             "name": "Python: Attach",
@@ -45,13 +49,6 @@
                 "--no-reload"
             ],
             "jinja": true
-        },
-        {
-            "name": "Python: Current File (External Terminal)",
-            "type": "python",
-            "request": "launch",
-            "program": "${file}",
-            "console": "externalTerminal"
         }
     ]
 }

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE Project SYSTEM "Project-5.1.dtd">
+<!-- eric project file for project tshirt_proj -->
+<!-- Saved: 2019-06-09, 12:36:14 -->
+<!-- Copyright (C) 2019 Mario Keplinger, kepimario@gmx.at -->
+<Project version="5.1">
+  <Language>en_US</Language>
+  <Hash>15939e0a20be0c20b3862b4fe981ee383b34c966</Hash>
+  <ProgLanguage mixed="0">Python3</ProgLanguage>
+  <ProjectType>PyQt5</ProjectType>
+  <Version></Version>
+  <Author>Mario Keplinger</Author>
+  <Email>kepimario@gmx.at</Email>
+  <Eol index="0"/>
+  <Sources>
+    <Source>__init__.py</Source>
+    <Source>tshirt/components/__init__.py</Source>
+    <Source>tshirt/components/models.py</Source>
+    <Source>tshirt/components/worker.py</Source>
+    <Source>tshirt/lib/__init__.py</Source>
+    <Source>tshirt/lib/helper.py</Source>
+    <Source>tshirt/lib/opencv.py</Source>
+    <Source>tshirt/lib/options.py</Source>
+    <Source>tshirt/lib/process.py</Source>
+    <Source>tshirt/main.py</Source>
+    <Source>tshirt/sandbox/__init__.py</Source>
+    <Source>tshirt/sandbox/h5.py</Source>
+    <Source>tshirt/sandbox/kmeans.py</Source>
+    <Source>tshirt/sandbox/scratch.py</Source>
+    <Source>tshirt/sandbox/thsirt_yes_or_no.py</Source>
+    <Source>tshirt/tests/__init__.py</Source>
+    <Source>tshirt/tests/test_options.py</Source>
+    <Source>tshirt/tests/test_process.py</Source>
+    <Source>tshirt/tools/migrate_models.py</Source>
+  </Sources>
+  <Forms/>
+  <Translations/>
+  <Resources/>
+  <Interfaces/>
+  <Others>
+    <Other>README.md</Other>
+  </Others>
+  <MainScript>tshirt/main.py</MainScript>
+  <Vcs>
+    <VcsType>None</VcsType>
+  </Vcs>
+  <FiletypeAssociations>
+    <FiletypeAssociation pattern="*.e4p" type="OTHERS"/>
+    <FiletypeAssociation pattern="*.idl" type="INTERFACES"/>
+    <FiletypeAssociation pattern="*.md" type="OTHERS"/>
+    <FiletypeAssociation pattern="*.py" type="SOURCES"/>
+    <FiletypeAssociation pattern="*.py3" type="SOURCES"/>
+    <FiletypeAssociation pattern="*.pyw" type="SOURCES"/>
+    <FiletypeAssociation pattern="*.pyw3" type="SOURCES"/>
+    <FiletypeAssociation pattern="*.qm" type="TRANSLATIONS"/>
+    <FiletypeAssociation pattern="*.qrc" type="RESOURCES"/>
+    <FiletypeAssociation pattern="*.rst" type="OTHERS"/>
+    <FiletypeAssociation pattern="*.ts" type="TRANSLATIONS"/>
+    <FiletypeAssociation pattern="*.txt" type="OTHERS"/>
+    <FiletypeAssociation pattern="*.ui" type="FORMS"/>
+    <FiletypeAssociation pattern="README" type="OTHERS"/>
+    <FiletypeAssociation pattern="README.*" type="OTHERS"/>
+  </FiletypeAssociations>
+</Project>

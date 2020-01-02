@@ -82,7 +82,7 @@ def kmeans_it(X):
         my_sods[i] = sods
     kneedle = kneed.KneeLocator(range(my_sods.size), my_sods,
                                 curve='convex', direction='decreasing')
-    kneedle_delta = 3
+    kneedle_delta = 2
     ret_fig = plt.figure(figsize=(8, 8))
     plt.plot(range(1, my_sods.size + 1), my_sods, '-d')
     plt.vlines(kneedle.knee + 1 + kneedle_delta, plt.ylim()[0], plt.ylim()[1])

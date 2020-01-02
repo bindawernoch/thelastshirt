@@ -5,10 +5,13 @@ import os
 # tshirt
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from components import models
-import models
 
 
 def main():
+    """
+    how to create the sqlite database:
+        tbd
+    """
     models.create_my_tables()  # boot up my model as defined in models
     #
     router = Router(models.MYDB)

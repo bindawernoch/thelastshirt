@@ -1,5 +1,6 @@
 import os
 import sys
+import h5py
 import warnings
 warnings.filterwarnings("ignore", message="numpy.dtype size changed")
 warnings.filterwarnings("ignore", message="numpy.ufunc size changed")
@@ -14,17 +15,19 @@ import components
 
 
 def operation_t(opts):
-    mytsf = "/home/mario/Dropbox/Tshirts/tshirt_data/"
+    mytsf = "../tshirt_data/"
     mypp = PdfPages(os.path.join(RUNTIMEDIR, "operation_t.pdf"))
+    myh5 = h5py.File(os.path.join(RUNTIMEDIR, "operation_t.h5"),'w')
     mysze = (3000, 4000)
-    mshirt = components.worker.Shirt(mytsf, mysze, mypp) 
+    mshirt = components.worker.Shirt(mytsf, mysze, mypp, myh5) 
     #
     for i, fn in enumerate(os.listdir(mytsf)):
         if os.path.isfile(os.path.join(mytsf, fn)):
             mshirt.render(i, fn)
-        # if i == 3:
-        #     break
+        if i == 2:
+            break
     mypp.close()
+    myh5.close()
     df = mshirt.get_res()
     # regions
     rgns = alt.pd.DataFrame(components.models.get_classifications())
