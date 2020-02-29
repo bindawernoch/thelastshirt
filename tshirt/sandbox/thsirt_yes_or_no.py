@@ -1,12 +1,13 @@
 import warnings
-warnings.filterwarnings("ignore", message="numpy.dtype size changed")
-warnings.filterwarnings("ignore", message="numpy.ufunc size changed")
+warnings.filterwarnings("ignore")
 from matplotlib.backends.backend_pdf import PdfPages
 from sklearn.cluster import KMeans
 import matplotlib.pyplot as plt
 import altair as alt
 import pandas as pd
 import numpy as np
+import pathlib
+import socket
 import kneed
 import h5py
 import sys
@@ -19,7 +20,8 @@ def printname(name):
     print(name)
 
 def main():
-    with  h5py.File('operation_t.h5','r') as hf:
+    operaton_t = DATA /  'operation_t.h5'
+    with  h5py.File(str(operaton_t),'r') as hf:
         # show all objects in file
         # hf.visit(printname)
         for key in hf.keys():
@@ -34,5 +36,10 @@ def main():
 
 
 if __name__ == '__main__':
-    RUNTIMEDIR = os.getcwd()
+    CWD = pathlib.Path().cwd()
+    MY_HOME = pathlib.Path().home()
+    if socket.gethostname() == 'penguin':
+        DATA = MY_HOME / "data"
+    else:
+         DATA = CWD
     main()

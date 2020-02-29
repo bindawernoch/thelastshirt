@@ -1,9 +1,10 @@
 import os
 import sys
 import h5py
+import socket
+import pathlib
 import warnings
-warnings.filterwarnings("ignore", message="numpy.dtype size changed")
-warnings.filterwarnings("ignore", message="numpy.ufunc size changed")
+warnings.filterwarnings("ignore")
 import numpy as np
 import pandas as pd
 import altair as alt
@@ -16,16 +17,16 @@ import components
 
 def operation_t(opts):
     mytsf = "../tshirt_data/"
-    mypp = PdfPages(os.path.join(RUNTIMEDIR, "operation_t.pdf"))
-    myh5 = h5py.File(os.path.join(RUNTIMEDIR, "operation_t.h5"),'w')
+    mypp = PdfPages(str(DATA /  "operation_t.pdf"))
+    myh5 = h5py.File(str(DATA /  "operation_t.h5"),'w')
     mysze = (3000, 4000)
     mshirt = components.worker.Shirt(mytsf, mysze, mypp, myh5) 
     #
     for i, fn in enumerate(os.listdir(mytsf)):
         if os.path.isfile(os.path.join(mytsf, fn)):
             mshirt.render(i, fn)
-        # if i == 2:
-        #     break
+        if i == 2:
+            break
     mypp.close()
     myh5.close()
     df = mshirt.get_res()
@@ -53,6 +54,11 @@ def operation_t(opts):
 
 
 if __name__ == '__main__':
-    RUNTIMEDIR = os.getcwd()
+    CWD = pathlib.Path().cwd()
+    MY_HOME = pathlib.Path().home()
+    if socket.gethostname() == 'penguin':
+        DATA = MY_HOME / "data"
+    else:
+         DATA = CWD
     OPTIONS = lib.Options()
     operation_t(OPTIONS.parse(sys.argv[1:]))
