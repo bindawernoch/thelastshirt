@@ -4,7 +4,6 @@ from lib import Process, ProcessException
 
 
 class TestProcess(unittest.TestCase):
-
     def setUp(self):
         self.process = Process()
 
@@ -12,6 +11,4 @@ class TestProcess(unittest.TestCase):
         self.assertEquals(self.process.execute("echo test"), "test\n")
 
     def test_should_raise_exception_on_failed_execution(self):
-        self.assertRaises(ProcessException,
-                          self.process.execute,
-                          "sh -c 'return 1'")
+        self.assertRaises(ProcessException, self.process.execute, "sh -c 'return 1'")

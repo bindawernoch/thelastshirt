@@ -15,10 +15,18 @@ def lines2df(row_name, row_id, lines, mask, msize, res_df):
                 for rho, theta in line:
                     c = np.cos(theta)
                     s = np.sin(theta)
-                    res_df.loc[(row_name, row_id, i), 'x0'] = int(c*rho * norm[1])
-                    res_df.loc[(row_name, row_id, i), 'y0'] = int(s*rho * norm[0])
-                    res_df.loc[(row_name, row_id, i), 'theta'] = int(90 - np.rad2deg(theta))
-                    #res_df.loc[(row_name, row_id, i), 'rho'] = int(rho)
-                    res_df.loc[(row_name, row_id, i), 'deltax'] = int((middle[1] - com[1] * norm[1]))
-                    res_df.loc[(row_name, row_id, i), 'deltay'] = int((middle[0] - com[0] * norm[0]))
-    res_df.rho = np.sqrt( (res_df.x0 + res_df.deltax)**2 + (res_df.y0 + res_df.deltay)**2 )
+                    res_df.loc[(row_name, row_id, i), "x0"] = int(c * rho * norm[1])
+                    res_df.loc[(row_name, row_id, i), "y0"] = int(s * rho * norm[0])
+                    res_df.loc[(row_name, row_id, i), "theta"] = int(
+                        90 - np.rad2deg(theta)
+                    )
+                    # res_df.loc[(row_name, row_id, i), 'rho'] = int(rho)
+                    res_df.loc[(row_name, row_id, i), "deltax"] = int(
+                        (middle[1] - com[1] * norm[1])
+                    )
+                    res_df.loc[(row_name, row_id, i), "deltay"] = int(
+                        (middle[0] - com[0] * norm[0])
+                    )
+    res_df.rho = np.sqrt(
+        (res_df.x0 + res_df.deltax) ** 2 + (res_df.y0 + res_df.deltay) ** 2
+    )

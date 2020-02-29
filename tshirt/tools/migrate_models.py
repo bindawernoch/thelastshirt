@@ -2,8 +2,9 @@ from peewee_migrate import Router
 from peewee import SqliteDatabase
 import sys
 import os
+
 # tshirt
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from components import models
 
 
@@ -16,11 +17,12 @@ def main():
     #
     router = Router(models.MYDB)
     # Create migration
-    router.create('ladida')
+    router.create("ladida")
     # Run migration/migrations
-    router.run('ladida')
+    router.run("ladida")
     # Run all unapplied migrations
     router.run()
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main()
