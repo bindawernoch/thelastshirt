@@ -1,0 +1,11 @@
+h5py
+numpy
+scipy
+pandas
+matplotlib
+altair
+opencv-python
+black
+pylint
+pytest
+peewee

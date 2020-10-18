@@ -13,29 +13,30 @@ import matplotlib.pyplot as plt
 from matplotlib.backends.backend_pdf import PdfPages
 
 # tshirt
-import lib
-import components
+import tshirt.lib
+import tshirt.components
 
 
 def operation_t(opts):
     mytsf = "../tshirt_data/"
+    mysze = (3000, 4000)
     mypp = PdfPages(str(DATA / "operation_t.pdf"))
     myh5 = h5py.File(str(DATA / "operation_t.h5"), "w")
-    mysze = (3000, 4000)
-    mshirt = components.worker.Shirt(mytsf, mysze, mypp, myh5)
+    mshirt = tshirt.components.worker.Shirt(mytsf, mysze, mypp, myh5)
     #
     for i, fn in enumerate(os.listdir(mytsf)):
         if os.path.isfile(os.path.join(mytsf, fn)):
             mshirt.render(i, fn)
-        if i == 2:
-            break
+        # if i == 2:
+        #     break
     mypp.close()
     myh5.close()
     df = mshirt.get_res()
     # regions
-    rgns = alt.pd.DataFrame(components.models.get_classifications())
+    rgns = alt.pd.DataFrame(tshirt.components.models.get_classifications())
     rect_rgns = (
-        alt.Chart(rgns)
+        alt
+        .Chart(rgns)
         .mark_rect()
         .encode(x="xstart:Q", x2="xend:Q", y="ystart:Q", y2="yend:Q", color="name:N")
     )
@@ -69,5 +70,5 @@ if __name__ == "__main__":
         DATA = MY_HOME / "data"
     else:
         DATA = CWD
-    OPTIONS = lib.Options()
+    OPTIONS = tshirt.lib.Options()
     operation_t(OPTIONS.parse(sys.argv[1:]))

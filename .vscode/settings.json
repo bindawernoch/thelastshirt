@@ -1,10 +1,11 @@
 // Platzieren Sie Ihre Einstellungen in dieser Datei, um Standard- und Benutzereinstellungen zu überschreiben.
 {
-    "python.pythonPath": "/usr/bin/python3",
+    "python.pythonPath": "/home/kepimario/PythonEnvironments/tshirt/bin/python",
     "cSpell.diagnosticLevel": "Hint",
     "code-runner.cwd": "/home/mario/Dropbox/Tshirts/tshirt_rntm",
     "code-runner.customCommand": "",
     "code-runner.defaultLanguage": "python",
     "code-runner.ignoreSelection": true,
-    "code-runner.saveAllFilesBeforeRun": true
+    "code-runner.saveAllFilesBeforeRun": true,
+    "python.linting.enabled": true
 }

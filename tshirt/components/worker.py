@@ -5,8 +5,8 @@ import matplotlib.pyplot as plt
 from matplotlib.backends.backend_pdf import PdfPages
 
 # tshirt
-import lib
-import lib.opencv
+import tshirt.lib
+import tshirt.lib.opencv
 
 
 @attr.s
@@ -32,7 +32,7 @@ class Shirt(object):
         self.column_names = ["x0", "y0", "theta", "rho", "deltax", "deltay"]
         idx = pd.MultiIndex(levels=[[]] * 3, codes=[[]] * 3, names=self.idx_names)
         self.res_df = pd.DataFrame(index=idx, columns=self.column_names)
-        self.mopencv = lib.opencv
+        self.mopencv = tshirt.lib.opencv
 
     def render(self, fid, fname):
         absfname = os.path.join(self.folder, fname)
@@ -40,7 +40,7 @@ class Shirt(object):
         (self.backg, self.obj, self.msk, self.img) = watershed
         self.edges, self.msk_img = self.mopencv.canny_it(self.msk)
         self.lines = self.mopencv.hough_it(self.edges)
-        lib.helper.lines2df(fname, fid, self.lines, self.msk, self.imgsz, self.res_df)
+        tshirt.lib.helper.lines2df(fname, fid, self.lines, self.msk, self.imgsz, self.res_df)
         if self.pdfpage and not self.lines is None:
             self._graph(fname)
         if self.h5db and not self.lines is None:
