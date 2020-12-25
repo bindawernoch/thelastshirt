@@ -80,13 +80,6 @@ def sobel_it(img):
 def watershed_it(img, backg, obj, plot_images=False):
     # https://stackoverflow.com/questions/42294109/remove-background-of-the-image-using-opencv-python
 
-    # Figure setup
-    if plot_images:
-        f, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2, 2, sharex="col", sharey="row")
-
-    if plot_images:
-        ax1.imshow(img)
-
     # Remember image axis lengths
     ilen = img.shape[0]
     jlen = img.shape[1]
@@ -113,11 +106,6 @@ def watershed_it(img, backg, obj, plot_images=False):
     # algorithm to generate a marked image
     marked = cv2.watershed(img, marker)
 
-    # Plot this one. If it does what we want, proceed;
-    # otherwise edit your markers and repeat
-    if plot_images:
-        ax2.imshow(marked, cmap="gray")
-
     # Make the background black, and what we want to keep white
     marked[marked < 255] = 0
     # marked[marked > 1] = 255
@@ -127,11 +115,6 @@ def watershed_it(img, backg, obj, plot_images=False):
     kernel = np.ones((3, 3), np.uint8)
     dilation = cv2.dilate(marked.astype(np.float32), kernel, iterations=1)
 
-    # Plot again to check whether the dilation is according to our needs
-    # If not, repeat by using a smaller/bigger kernel, or more/less iterations
-    if plot_images:
-        ax3.imshow(dilation, cmap="gray")
-
     # Now apply the mask we created on the initial image
     final_img = cv2.bitwise_and(img, img, mask=dilation.astype(np.uint8))
 
@@ -140,8 +123,17 @@ def watershed_it(img, backg, obj, plot_images=False):
     b, g, r = cv2.split(final_img)
     final_img = cv2.merge([r, g, b])
 
-    # Plot the final result
+    # Plot this one. If it does what we want, proceed;
+    # otherwise edit your markers and repeat
     if plot_images:
+        # Figure setup
+        f, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2, 2, sharex="col", sharey="row")
+        ax1.imshow(img)
+        ax2.imshow(marked, cmap="gray")
+        # Plot again to check whether the dilation is according to our needs
+        # If not, repeat by using a smaller/bigger kernel, or more/less iterations
+        ax3.imshow(dilation, cmap="gray")
+        # Plot the final result
         ax4.imshow(final_img)
 
     return backg, obj, dilation.astype(np.uint8), final_img

@@ -23,3 +23,5 @@ tshirt/.mypy_cache/*
 tshirt/002emypy_cache - Modify/*
 data/my_database.db
 tshirt/operation_t.h5
+.vscode/settings.json
+.vscode/launch.json
