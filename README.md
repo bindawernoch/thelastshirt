@@ -1,20 +1,9 @@
-# A sample Python project
+# The last (T)shirt
 
-![Python Logo](https://www.python.org/static/community_logos/python-logo.png "Sample inline image")
+![Tshirts](https://www.dropbox.com/s/9lu7svctkr577hj/all_2.png?dl=0 "The goal")
 
-A sample project that exists as an aid to the [Python Packaging User
-Guide][packaging guide]'s [Tutorial on Packaging and Distributing
-Projects][distribution tutorial].
+This is only a modest beginning of a pet project!! The goal is to automatically remove the background in pictures of T-shirts.
 
-This project does not aim to cover best practices for Python project
-development as a whole. For example, it does not provide guidance or tool
-recommendations for version control, documentation, or testing.
-
-[The source for this project is available here][src].
-
-Most of the configuration for a Python project is done in the `setup.py` file,
-an example of which is included in this project. You should edit this file
-accordingly to adapt this sample project to your needs.
 
 ----
 
