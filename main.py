@@ -18,7 +18,7 @@ import tshirt.components
 
 
 def operation_t(opts):
-    mytsf = "../tshirt_data/"
+    mytsf = str(BASE / "tshirt_data/")
     mysze = (3000, 4000)
     mypp = PdfPages(str(DATA / "operation_t.pdf"))
     myh5 = h5py.File(str(DATA / "operation_t.h5"), "w")
@@ -65,10 +65,8 @@ def operation_t(opts):
 
 if __name__ == "__main__":
     CWD = pathlib.Path().cwd()
+    BASE = pathlib.Path(__file__).parent
     MY_HOME = pathlib.Path().home()
-    if socket.gethostname() == "penguin":
-        DATA = MY_HOME / "data"
-    else:
-        DATA = CWD
+    DATA = CWD
     OPTIONS = tshirt.lib.Options()
     operation_t(OPTIONS.parse(sys.argv[1:]))

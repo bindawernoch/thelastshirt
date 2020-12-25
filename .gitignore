@@ -25,3 +25,5 @@ data/my_database.db
 tshirt/operation_t.h5
 .vscode/settings.json
 .vscode/launch.json
+.vscode/tasks.json
+operation_t.h5
