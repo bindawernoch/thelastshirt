@@ -1,6 +1,6 @@
 # The last (T)shirt
 
-![Tshirts](https://www.dropbox.com/s/9lu7svctkr577hj/all_2.png?dl=0 "The goal")
+![Tshirts]( "The goal")
 
 This is only a modest beginning of a pet project!! The goal is to automatically remove the background in pictures of T-shirts.
 
