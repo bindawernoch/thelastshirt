@@ -1,6 +1,6 @@
 # The last (T)shirt
 
-![Tshirts]( "The goal")
+![Tshirts](https://gitlab.com/bindawernoch/thelastshirt/-/blob/master/tshirt_data/example_result/all_2.png?expanded=true&viewer=rich "The goal")
 
 This is only a modest beginning of a pet project!! The goal is to automatically remove the background in pictures of T-shirts.
 
