@@ -27,3 +27,6 @@ tshirt/operation_t.h5
 .vscode/launch.json
 .vscode/tasks.json
 operation_t.h5
+tenv/*
+tshirt_data/P1010098.png
+P1010098_out.png

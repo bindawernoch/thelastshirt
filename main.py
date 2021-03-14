@@ -1,37 +1,29 @@
-import os
+import io
 import sys
-import h5py
-import socket
 import pathlib
 import warnings
+import numpy as np
+from PIL import Image
+from rembg.bg import remove
+import matplotlib.pyplot as plt
 
 warnings.filterwarnings("ignore")
-import numpy as np
-import pandas as pd
-import altair as alt
-import matplotlib.pyplot as plt
-from matplotlib.backends.backend_pdf import PdfPages
-
 # tshirt
 import tshirt.lib
 import tshirt.components
 
-from rembg.bg import remove
-from PIL import Image
 
 def operation_t(opts):
     mytsf = BASE / "tshirt_data/"
-
-    for i, fn in enumerate(os.listdir(mytsf)):
-        if os.path.isfile(os.path.join(mytsf, fn)):
-            f = np.fromfile(fn)
-            result = remove(f)
-            img = Image.open(io.BytesIO(result)).convert("RGBA")
-            print(fn)
-        if i == 2:
-            break
-
-    
+    exts = [".png"]  # ".jpg",
+    for fh in [x for x in mytsf.glob("*") if x.suffix.lower() in exts]:
+        with fh.open() as f:
+            p = np.fromfile(f)
+            result = remove(p)
+        img = Image.open(io.BytesIO(result)).convert("RGBA")
+        fig, ax = plt.subplots()
+        ax.imshow(img)
+        fig.savefig(fh.stem + "_out" + fh.suffix)
 
 
 if __name__ == "__main__":
